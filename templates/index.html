@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog::Django 101</title>
+
+    <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/css/mdb.min.css">
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/js/mdb.min.js"></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/js/mdb.min.js"></script>
+
+</head>
+<body>
+    <h1>My Awesome Django Blog</h1>
+    <hr>
+    <div id="container">
+        <div class="row">
+            <div class="posts">
+                {% for post in posts %}
+
+                    <div class="post">
+                        <h2 class="title">{{ post.title }}</h2>
+                        <span class="posted_at">{{ post.created_at }}</span>
+                        <p class="content">{{ post.body }}</p>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
