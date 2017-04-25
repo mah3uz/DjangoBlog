@@ -1,3 +1,21 @@
 from django.contrib import admin
 
-# Register your models here.
+from blog_post.models import BlogPost
+
+
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+
+make_published.short_description = "Mark selected stories as published"
+
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'created_at', 'status']
+    list_filter = ['created_at']
+    search_fields = ['title', 'body']
+    ordering = ['-created_at']
+    actions = [make_published]
+
+    class Meta:
+        model = BlogPost
+
+admin.site.register(BlogPost, BlogPostAdmin)
