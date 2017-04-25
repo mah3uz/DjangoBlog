@@ -17,10 +17,11 @@ from django.conf.urls import url, include
 from django.contrib import admin
 # from material.frontend import urls as frontend_urls
 
-from blog_post.views import index
+from blog_post.views import index, view_post
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'', include(frontend_urls)),
     url(r'^$', index, name='index_page'),
+    url(r'^post/(?P<pk>[0-9])/$', view_post, name='view_post'),
 ]

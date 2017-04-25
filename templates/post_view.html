@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!--Post-->
+    <div class="post-wrapper wow fadeIn" data-wow-delay="0.2s">
+        <!--Post data-->
+        <h1 class="h1-responsive">{{ post.title }}</h1>
+        <h5>Written by <a href="">John Doe</a>, {{ post.created_at }}</h5>
+        {% if post.category %}
+            <h6>Posted in: <a class="btn waves-effect waves-light btn-category" href="/?category={{ post.category.id }}">{{ post.category }}</a></h6>
+        {% endif %}
+
+        <br>
+
+        <!--Featured image -->
+        <div class="view overlay hm-white-light z-depth-1-half">
+            <img src="http://mdbootstrap.com/img/Photos/Slides/img%20(116).jpg" class="img-fluid " alt="">
+            <div class="mask">
+            </div>
+        </div>
+
+        <br>
+
+        <!--Post excerpt-->
+        <p class="post-body-text">{{ post.body }}</p>
+
+    </div>
+    <!--/.Post-->
+
+{% endblock %}

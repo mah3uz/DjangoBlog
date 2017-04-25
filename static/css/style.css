@@ -20,3 +20,8 @@ footer.page-footer {
     background-color: #036039;
     margin-top: 2rem;
 }
+.btn-category {
+    background: #dd5477;
+    padding: 3px 10px;
+    text-shadow: 1px 1px 1px #541c1c;
+}

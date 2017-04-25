@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blog_post.models import BlogPost
+from blog_post.models import BlogPost, Categories
 
 
 def make_published(modeladmin, request, queryset):
@@ -9,7 +9,7 @@ def make_published(modeladmin, request, queryset):
 make_published.short_description = "Mark selected stories as published"
 
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created_at', 'status']
+    list_display = ['title', 'category', 'status']
     list_filter = ['created_at']
     search_fields = ['title', 'body']
     ordering = ['-created_at']
@@ -19,3 +19,4 @@ class BlogPostAdmin(admin.ModelAdmin):
         model = BlogPost
 
 admin.site.register(BlogPost, BlogPostAdmin)
+admin.site.register(Categories)

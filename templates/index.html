@@ -1,253 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+{% block content %}
 
-    <title>My Django Blog::Django101!</title>
+    {% for post in posts %}
 
-    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}"/>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{% static "css/mdb.min.css" %}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{% static "css/style.css" %}" rel="stylesheet">
-</head>
+        <!--Post-->
+        <div class="post-wrapper wow fadeIn" data-wow-delay="0.2s">
+            <!--Post data-->
+            <h1 class="h1-responsive"><a href="{% url 'view_post' pk=post.pk %}">{{ post.title }}</a></h1>
+            <h5>Written by <a href="">John Doe</a>, {{ post.created_at }}</h5>
+            {% if post.category %}
+                <h6>Posted in: <a class="btn waves-effect waves-light btn-category" href="/?category={{ post.category.id }}">{{ post.category }}</a></h6>
+            {% endif %}
 
-<body>
+            <br>
 
-    <header>
-        <!--Navbar-->
-        <nav class="navbar navbar-toggleable-md navbar-dark">
-            <div class="container">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="#">
-                    <strong><p id="icon" style="text-shadow: rgb(2, 67, 40) 0px 0px 0px, rgb(2, 68, 41) 1px 1px 0px, rgb(2, 70, 41) 2px 2px 0px, rgb(2, 71, 42) 3px 3px 0px, rgb(2, 72, 43) 4px 4px 0px, rgb(2, 73, 43) 5px 5px 0px, rgb(2, 74, 44) 6px 6px 0px, rgb(2, 75, 45) 7px 7px 0px, rgb(2, 76, 45) 8px 8px 0px, rgb(2, 78, 46) 9px 9px 0px, rgb(2, 79, 47) 10px 10px 0px, rgb(2, 80, 47) 11px 11px 0px, rgb(3, 81, 48) 12px 12px 0px, rgb(3, 82, 49) 13px 13px 0px, rgb(3, 83, 49) 14px 14px 0px, rgb(3, 84, 50) 15px 15px 0px, rgb(3, 86, 51) 16px 16px 0px, rgb(3, 87, 52) 17px 17px 0px, rgb(3, 88, 52) 18px 18px 0px, rgb(3, 89, 53) 19px 19px 0px, rgb(3, 90, 54) 20px 20px 0px, rgb(3, 91, 54) 21px 21px 0px, rgb(3, 93, 55) 22px 22px 0px, rgb(3, 94, 56) 23px 23px 0px, rgb(3, 95, 56) 24px 24px 0px;font-size: 40px;color: rgb(255, 255, 255);height: 75px;width: 249px;line-height: 75px;border-radius: 0%;text-align: center;background-color: rgb(3, 96, 57);"> madCoderZ </p></strong>
-                </a>
-                <div class="collapse navbar-collapse" id="navbarNav1">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Portfolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">About Me</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Contact</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline waves-effect waves-light">
-                        <input class="form-control" type="text" placeholder="Search">
-                    </form>
+            <!--Featured image -->
+            <div class="view overlay hm-white-light z-depth-1-half">
+                <img src="http://mdbootstrap.com/img/Photos/Slides/img%20(116).jpg" class="img-fluid " alt="">
+                <div class="mask">
                 </div>
             </div>
-        </nav>
-        <!--/.Navbar-->
-    </header>
 
-    <main>
-        <!--Main layout-->
-        <div class="container">
+            <br>
 
-            <!--Page heading-->
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="h1-responsive">madCoderZ Blog
-                        <small class="text-muted">Amazing Django Blog 101! </small>
-                    </h1>
-                </div>
-            </div>
-            <!--/.Page heading-->
-            <hr>
+            <!--Post excerpt-->
+            <p class="post-body-text">{{ post.body | truncatewords:20 }}</p>
 
-            <!--Post row-->
-            <div class="row wow">
-
-                <!--Post column-->
-                {% for post in posts %}
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.2s">
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay hm-white-slight">
-                            <img src="http://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(43).jpg" class="img-fluid" alt="">
-                            <a href="#!">
-                                <div class="mask"></div>
-                            </a>
-                        </div>
-                        <!--/.Card image-->
-
-                        <!--Card content-->
-                        <div class="card-block">
-                            <!--Title-->
-                            <h4 class="card-title">{{ post.title }}</h4>
-                            <!--Date-->
-                            <span>{{ post.created_at }}</span>
-                            <!--Text-->
-                            <p class="card-text">{{ post.body }}</p>
-                            <div class="read-more">
-                                <a href="#!" class="btn btn-brown">Read more</a>
-                            </div>
-                        </div>
-                        <!--/.Card content-->
-
-                    </div>
-                    <!--/.Card-->
-                </div>
-                <!--/.Post column-->
-                {% endfor %}
-            </div>
-            <!-- /.Post Row -->
-            <hr>
-
-            <!--Pagination-->
-            <nav class="row flex-center wow fadeIn" data-wow-delay="0.2s">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#!" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#!">1 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#!">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#!" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!--/.Pagination-->
+            <!--"Read more" button-->
+            <button class="btn btn-info"><a href="{% url 'view_post' pk=post.pk %}"> Read more </a></button>
         </div>
-        <!--/.Main layout-->
-    </main>
-
-    <!--Footer-->
-    <footer class="page-footer center-on-small-only">
-        <!--Footer links-->
-        <div class="container-fluid">
-            <div class="row">
-                <!--First column-->
-                <div class="col-md-3 offset-lg-1 hidden-lg-down">
-                    <h5 class="title">About madCoderZ</h5>
-                    <p>Material Design (codenamed Quantum Paper) is a design language developed by Google.</p>
-                    <p>Material Design for Bootstrap (MDB) is a powerful Material Design UI KIT for most popular HTML, CSS, and JS framework - Bootstrap.</p>
-                </div>
-                <!--/.First column-->
-                <hr class="hidden-md-up">
-                <!--Second column-->
-                <div class="col-lg-2 col-md-4 offset-lg-1">
-                    <h5 class="title">Cooking books</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">"Cooking A-Z" by Mike Kalynsky</a>
-                        </li>
-                        <li>
-                            <a href="#!">"No More Heat" by Joe Doe</a>
-                        </li>
-                        <li>
-                            <a href="#!">"Sea Food for Starters" by Alex Well</a>
-                        </li>
-                        <li>
-                            <a href="#!">"Easy Calories" by Samantha Bens</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Second column-->
-                <hr class="hidden-md-up">
-                <!--Third column-->
-                <div class="col-lg-2 col-md-4">
-                    <h5 class="title">Popular recipes</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Beff steak with almonds</a>
-                        </li>
-                        <li>
-                            <a href="#!">Cordon Bleu</a>
-                        </li>
-                        <li>
-                            <a href="#!">Vegan pancakes</a>
-                        </li>
-                        <li>
-                            <a href="#!">Turkey stuffed sandwiches</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Third column-->
-                <hr class="hidden-md-up">
-                <!--Fourth column-->
-                <div class="col-lg-2 col-md-4">
-                    <h5 class="title">Find me on</h5>
-                    <ul>
-                        <li>
-                            <a href="#!">Facebook</a>
-                        </li>
-                        <li>
-                            <a href="#!">Youtube</a>
-                        </li>
-                        <li>
-                            <a href="#!">Instagram</a>
-                        </li>
-                        <li>
-                            <a href="#!">Pinterest</a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.Fourth column-->
-            </div>
-        </div>
-        <!--/.Footer links-->
+        <!--/.Post-->
         <hr>
-        <!--Call to action-->
-        <div class="call-to-action">
-            <h4>Material Design for Bootstrap</h4>
-            <ul>
-                <li>
-                    <a target="_blank" rel="nofollow"><p id="icon" style="text-shadow: rgb(2, 67, 40) 0px 0px 0px, rgb(2, 68, 41) 1px 1px 0px, rgb(2, 70, 41) 2px 2px 0px, rgb(2, 71, 42) 3px 3px 0px, rgb(2, 72, 43) 4px 4px 0px, rgb(2, 73, 43) 5px 5px 0px, rgb(2, 74, 44) 6px 6px 0px, rgb(2, 75, 45) 7px 7px 0px, rgb(2, 76, 45) 8px 8px 0px, rgb(2, 78, 46) 9px 9px 0px, rgb(2, 79, 47) 10px 10px 0px, rgb(2, 80, 47) 11px 11px 0px, rgb(3, 81, 48) 12px 12px 0px, rgb(3, 82, 49) 13px 13px 0px, rgb(3, 83, 49) 14px 14px 0px, rgb(3, 84, 50) 15px 15px 0px, rgb(3, 86, 51) 16px 16px 0px, rgb(3, 87, 52) 17px 17px 0px, rgb(3, 88, 52) 18px 18px 0px, rgb(3, 89, 53) 19px 19px 0px, rgb(3, 90, 54) 20px 20px 0px, rgb(3, 91, 54) 21px 21px 0px, rgb(3, 93, 55) 22px 22px 0px, rgb(3, 94, 56) 23px 23px 0px, rgb(3, 95, 56) 24px 24px 0px;font-size: 40px;color: rgb(255, 255, 255);height: 75px;width: 249px;line-height: 75px;border-radius: 0%;text-align: center;background-color: rgb(3, 96, 57);"> madCoderZ </p></a>
-                </li>
-            </ul>
-        </div>
-        <!--/.Call to action-->
 
-        <!--Copyright-->
-        <div class="footer-copyright">
-            <div class="containter-fluid">
-                © 2017 Copyright: <a href="#"> madCoderZ</a>
-            </div>
-        </div>
-        <!--/.Copyright-->
-    </footer>
-    <!--/.Footer-->
+    {% endfor %}
 
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="{% static "js/jquery-3.1.1.min.js" %}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{% static "js/tether.min.js" %}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
-    <!-- My Custom Javascript -->
-    <script type="text/javascript" src="{% static "js/custom.js" %}"></script>
-</body>
-</html>
+{% endblock %}
